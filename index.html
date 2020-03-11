@@ -37,7 +37,7 @@ function makeChart(rawData, populationRaw)
     let countriesOfInterest = ["Estonia", "Latvia", "Lithuania"]; // can hardcode
     let countriesFilteredOut = ["Mainland China", "US", "Others"]; // todo: handle (summarize?)
     let minAmountOfCases = 100;
-    let populationDivisor = 10000;
+    let populationDivisor = 1000000;
 
     let populations = populationRaw.map(function(x) {
         return {

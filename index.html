@@ -4,6 +4,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.4/randomColor.min.js"></script>
     </head>
     <body>
         <canvas id="timelineCases"></canvas>
@@ -45,7 +46,12 @@ function makeChart(rawData)
     var volume = data.map(x => x[dateUSA]);
 
     var chartDatsets = data.map(function(x) {
-        return {label: x["Country/Region"], data: valuesPerDates(x, datesLabels)};
+        return {
+            label: x["Country/Region"], 
+            data: valuesPerDates(x, datesLabels),
+            fill: false,
+            borderColor: randomColor()
+        };
     });
 
     var chart = new Chart('timelineCases', {

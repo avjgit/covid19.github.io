@@ -44,6 +44,20 @@ function makeChart(rawData)
     var labels = data.map(function(d) {return d["Country/Region"]});
     var volume = data.map(function(d) {return d[dateUSA]});
 
+    var chart = new Chart('timelineCases', {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45]
+            }]
+        },
+        options: {}
+    });
+
     new Chart('barChartCases', {
         type: 'horizontalBar',
         data: {
@@ -86,21 +100,6 @@ function makeChart(rawData)
     //     }
     // });
 
-
-    var ctx = document.getElementById('timelineCases').getContext('2d');
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'My First dataset',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45]
-            }]
-        },
-        options: {}
-    });
 }
 function dateLabels(jsonObj){
     let nonDateProperties = ["Province/State","Country/Region","Lat","Long"];

@@ -49,8 +49,8 @@ function makeChart(rawData)
         data: {
             labels: datesLabels,
             datasets: [{
-                label: 'My First dataset',
-                data: [0, 10, 5, 2, 20, 30, 45]
+                label: data[0]["Country/Region"],
+                data: valuesPerDates(data[0], datesLabels)
             }]
         },
         options: {}
@@ -108,10 +108,11 @@ function dateLabels(jsonObj){
     }
     return dateProperties;  
 }
-function getMaxAmount(countryRecord, datesLabels){
-    let values = datesLabels.map(x => countryRecord[x]);
-    return Math.max(...values);
-}
+
+let valuesPerDates = (countryRecord, datesLabels) => datesLabels.map(x => countryRecord[x]);
+
+let getMaxAmount = (countryRecord, datesLabels) => Math.max(...valuesPerDates(countryRecord, datesLabels));
+
 function yesterdaysDate(){
     var date = new Date();
     date.setDate(date.getDate() - 1);

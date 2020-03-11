@@ -44,7 +44,6 @@ function makeChart(rawData)
 
     var chart = new Chart('cases', {
         type: 'horizontalBar',
-        label: 'Infected on ' + dateISO,
         data: {
             labels: labels,
             datasets: [
@@ -54,10 +53,14 @@ function makeChart(rawData)
             ]
         },
         options: {
-        legend: {
-            display: false,
+            legend: {
+                display: false,
+            },
+            title: {
+                display: true,
+                text: 'Infected on ' + dateISO,
+            }
         }
-    }
     });
 }
 
@@ -83,6 +86,6 @@ function yesterdaysDate()
 }
 
 let usaDate = (year, month, day) => month + '/' + day + '/' + year;
-let isoDate = (year, month, day) => year + '/' + month + '/' + day;
+let isoDate = (year, month, day) => '20' + year + '/' + month + '/' + day;
 
 </script>

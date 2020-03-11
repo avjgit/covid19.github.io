@@ -1,62 +1,23 @@
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
-</head>
-
 <html>
-    <canvas id="cases"></canvas>
-
+    <head>
+        <TITLE>Covid19</TITLE>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    </head>
+    <body>
+        <canvas id="cases"></canvas>
+    </body>
 </html>    
-
 <script>
-
 dataUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
 
-
-d3.csv(dataUrl)
-        .then(makeChart);
-
-$(document).ready(function() {
-
-
-    $.ajax({
-            type: "GET",
-            url: dataUrl,
-            dataType: "text",
-            success: function(data) {
-                let infected = downloadCSVToArray(data);
-                buildChart(infected);
-            }
-        });
-    }
-);
+d3.csv(dataUrl).then(makeChart);
 
 function makeChart(data)
 {
     console.log(data);
-}
-
-function downloadCSVToArray(allText) {
-    var allTextLines = allText.split(/\r\n|\n/);
-    var headers = allTextLines[0].split(',');
-    var lines = [];
-
-    for (var i=1; i<allTextLines.length; i++) {
-        var data = allTextLines[i].split(',');
-        if (data.length == headers.length) {
-
-            var tarr = [];
-            for (var j=0; j<headers.length; j++) {
-                tarr.push(headers[j]+":"+data[j]);
-            }
-            lines.push(tarr);
-        }
-    }
-    return lines;
-}
-
-function buildChart(data){
+    
     var chart = new Chart('cases', {
         type: 'horizontalBar',
         data: {
@@ -69,5 +30,4 @@ function buildChart(data){
         }
     });
 }
-
 </script>

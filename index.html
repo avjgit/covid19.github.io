@@ -7,6 +7,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.4/randomColor.min.js"></script>
     </head>
     <body>
+        <canvas id="timelineCasesPerCapita"></canvas>
         <canvas id="timelineCases"></canvas>
         <canvas id="barChartCases"></canvas>
     </body>
@@ -32,18 +33,19 @@ d3.csv(dataUrl)
 
 function makeChart(rawData, populationRaw)
 {
-    let populations = populationRaw.map(function(x) {
-        return {
-            country: x.country,
-            population: x.population / 10000
-        }
-    });
-
-    console.log(populations.filter(x => x.country == "Latvia")[0].population);
-
+    
     let countriesOfInterest = ["Estonia", "Latvia", "Lithuania"]; // can hardcode
     let countriesFilteredOut = ["Mainland China", "US", "Others"]; // todo: handle (summarize?)
     let minAmountOfCases = 100;
+    let populationDivisor = 10000;
+
+    let populations = populationRaw.map(function(x) {
+        return {
+            country: mapCountry(x.country),
+            population: x.population / populationDivisor
+        }
+    });
+
     let datesLabels = dateLabels(rawData[0]);
 
     let data = rawData.filter(function(x) {
@@ -67,10 +69,41 @@ function makeChart(rawData, populationRaw)
         };
     });
 
+    // deep copy?
+    var chartPerCapitaDatasets = chartDatsets.map(function(x) {
+
+        console.log(x.label)
+        let countryPopulation = populations.filter(p => p.country == x.label)[0].population;
+        console.log("found")
+        console.log(countryPopulation);
+        console.log(x.data);
+
+        return {
+            label: x.label, 
+            data: x.data.map(z => parseInt(z) / countryPopulation),
+            fill: x.fill,
+            borderColor: x.borderColor
+        };
+    });
+
     var maxDays = Math.max(...chartDatsets.map(x => x.data.length));
     var daysLabels = generateLabels(maxDays);
 
-    var chart = new Chart('timelineCases', {
+    new Chart('timelineCasesPerCapita', {
+        type: 'line',
+        data: {
+            labels: daysLabels,
+            datasets: chartPerCapitaDatasets
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Total count since first infected, per ' + populationDivisor + ' people',
+            }
+        }
+    });
+
+    new Chart('timelineCases', {
         type: 'line',
         data: {
             labels: daysLabels,
@@ -139,4 +172,12 @@ function generateLabels(amount){
     }
     return labels;
 }
+function mapCountry(country) {
+    if (country === "United Kingdom") return "UK";
+    if (country === "Iran") return "Iran (Islamic Republic of)";
+    if (country === "South Korea") return "Republic of Korea";
+    if (country === "Hong Kong") return "Hong Kong SAR";
+    return country;
+}
+
 </script>

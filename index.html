@@ -6,7 +6,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     </head>
     <body>
-        <canvas id="cases"></canvas>
+        <canvas id="barChartCases"></canvas>
+        <canvas id="timelineCases"></canvas>
     </body>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160266365-1"></script>
@@ -42,7 +43,7 @@ function makeChart(rawData)
     var labels = data.map(function(d) {return d["Country/Region"]});
     var volume = data.map(function(d) {return d[dateUSA]});
 
-    var chart = new Chart('cases', {
+    new Chart('barChartCases', {
         type: 'horizontalBar',
         data: {
             labels: labels,
@@ -62,21 +63,59 @@ function makeChart(rawData)
             }
         }
     });
-}
 
-function getMaxAmount(countryRecord)
-{
-    let nonDateFields = ["Province/State","Country/Region","Lat","Long"];
-    let values = [];
-    for (var key in countryRecord) {
-        if(nonDateFields.includes(key)) continue;
-        values.push(countryRecord[key]);
+    // new Chart('timelineCases', {
+    //     type: 'horizontalBar',
+    //     data: {
+    //         labels: labels,
+    //         datasets: [
+    //             {
+    //                 data: volume
+    //             }
+    //         ]
+    //     },
+    //     options: {
+    //         legend: {
+    //             display: false,
+    //         },
+    //         title: {
+    //             display: true,
+    //             text: 'Infected',
+    //         }
+    //     }
+    // });
+
+    var ctx = document.getElementById('timelineCases').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45]
+            }]
+        },
+        options: {}
+    });
+}
+function dateLabels(jsonObj){
+    let nonDateProperties = ["Province/State","Country/Region","Lat","Long"];
+    let dateProperties = [];
+    for (var property in jsonObj) {
+        if(nonDateProperties.includes(property)) continue;
+        dateProperties.push(property);
     }
+    return dateProperties;  
+}
+function getMaxAmount(countryRecord){
+    let dates = dateLabels(countryRecord);
+    let values = [];
+    dates.forEach(x => values.push(countryRecord[x]));
     return Math.max(...values);
 }
-
-function yesterdaysDate()
-{
+function yesterdaysDate(){
     var date = new Date();
     date.setDate(date.getDate() - 1);
     var year = date.getFullYear().toString().substr(-2);

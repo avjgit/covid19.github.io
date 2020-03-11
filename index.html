@@ -26,7 +26,7 @@ d3.csv(dataUrl).then(makeChart);
 function makeChart(rawData)
 {
     let countriesOfInterest = ["Estonia", "Latvia", "Lithuania"]; // can hardcode
-    let countriesFilteredOut = ["Mainland China", "US"]; // todo: handle (summarize?)
+    let countriesFilteredOut = ["Mainland China", "US", "Others"]; // todo: handle (summarize?)
     let minAmountOfCases = 100;
 
     let data = rawData.filter(function(x) {
@@ -34,12 +34,17 @@ function makeChart(rawData)
         if (countriesOfInterest.includes(x["Country/Region"])) return true;
         return getMaxAmount(x) >= minAmountOfCases;
     });
-
+    console.log(data);
+    let [year, month, day] = yesterdaysDate();
+    let dateUSA = usaDate(year, month, day);
+    let dateISO = isoDate(year, month, day);
+    
     var labels = data.map(function(d) {return d["Country/Region"]});
-    var volume = data.map(function(d) {return d["3/10/20"]});
+    var volume = data.map(function(d) {return d[dateUSA]});
 
     var chart = new Chart('cases', {
         type: 'horizontalBar',
+        label: 'Infected on ' + dateISO,
         data: {
             labels: labels,
             datasets: [
@@ -47,7 +52,12 @@ function makeChart(rawData)
                     data: volume
                 }
             ]
+        },
+        options: {
+        legend: {
+            display: false,
         }
+    }
     });
 }
 
@@ -57,10 +67,22 @@ function getMaxAmount(countryRecord)
     let values = [];
     for (var key in countryRecord) {
         if(nonDateFields.includes(key)) continue;
-        console.log(countryRecord[key]);
         values.push(countryRecord[key]);
     }
     return Math.max(...values);
 }
+
+function yesterdaysDate()
+{
+    var date = new Date();
+    date.setDate(date.getDate() - 1);
+    var year = date.getFullYear().toString().substr(-2);
+    var month = date.getMonth() + 1; //js months are zero-based
+    var day = date.getDate();
+    return [year, month, day]
+}
+
+let usaDate = (year, month, day) => month + '/' + day + '/' + year;
+let isoDate = (year, month, day) => year + '/' + month + '/' + day;
 
 </script>

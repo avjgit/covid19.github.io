@@ -27,16 +27,13 @@ function makeChart(rawData)
 {
     let countriesOfInterest = ["Estonia", "Latvia", "Lithuania"]; // can hardcode
     let countriesFilteredOut = ["Mainland China", "US"]; // todo: handle (summarize?)
+    let minAmountOfCases = 100;
 
     let data = rawData.filter(function(x) {
         if (countriesFilteredOut.includes(x["Country/Region"])) return false;
         if (countriesOfInterest.includes(x["Country/Region"])) return true;
-        return true;
+        return getMaxAmount(x) >= minAmountOfCases;
     });
-
-    // let dataWithoutTitles = x.slice(4) // first three elements are province, country, lat, long
-
-        console.log(getMaxAmount(data[0]));
 
     var labels = data.map(function(d) {return d["Country/Region"]});
     var volume = data.map(function(d) {return d["3/10/20"]});

@@ -44,14 +44,15 @@ function makeChart(rawData)
     var labels = data.map(x => x["Country/Region"]);
     var volume = data.map(x => x[dateUSA]);
 
+    var chartDatsets = data.map(function(x) {
+        return {label: x["Country/Region"], data: valuesPerDates(x, datesLabels)};
+    });
+
     var chart = new Chart('timelineCases', {
         type: 'line',
         data: {
             labels: datesLabels,
-            datasets: [{
-                label: data[0]["Country/Region"],
-                data: valuesPerDates(data[0], datesLabels)
-            }]
+            datasets: chartDatsets
         },
         options: {}
     });

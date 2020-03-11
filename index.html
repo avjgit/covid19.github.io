@@ -17,14 +17,19 @@ d3.csv(dataUrl).then(makeChart);
 function makeChart(data)
 {
     console.log(data);
-    
+
+    var labels = data.map(function(d) {return d["Country/Region"]});
+    var volume = data.map(function(d) {return d["3/10/20"]});
+
+    console.log(labels);
+
     var chart = new Chart('cases', {
         type: 'horizontalBar',
         data: {
-            labels: ['A', 'B', 'C'],
+            labels: labels,
             datasets: [
                 {
-                    data: [10, 20, 30]
+                    data: volume
                 }
             ]
         }

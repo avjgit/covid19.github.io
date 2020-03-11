@@ -16,7 +16,7 @@
         gtag('js', new Date());
         gtag('config', 'UA-160266365-1');
     </script>
-</html>    
+</html>
 <script>
 
 dataUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
@@ -25,26 +25,21 @@ d3.csv(dataUrl).then(makeChart);
 
 function makeChart(rawData)
 {
-    console.log(rawData);
-
     let countriesOfInterest = ["Estonia", "Latvia", "Lithuania"]; // can hardcode
     let countriesFilteredOut = ["Mainland China", "US"]; // todo: handle (summarize?)
-    let countriesWithManyCases = rawData.map(function(d) {
-
-        return d["Country/Region"]
-    });
 
     let data = rawData.filter(function(x) {
-        return (countriesOfInterest.includes(x["Country/Region"])
-        || countriesWithManyCases.includes(x["Country/Region"]))
-        && !countriesFilteredOut.includes(x["Country/Region"]);
+        if (countriesFilteredOut.includes(x["Country/Region"])) return false;
+        if (countriesOfInterest.includes(x["Country/Region"])) return true;
+        return true;
     });
+
+    // let dataWithoutTitles = x.slice(4) // first three elements are province, country, lat, long
+
+        console.log(getMaxAmount(data[0]));
 
     var labels = data.map(function(d) {return d["Country/Region"]});
     var volume = data.map(function(d) {return d["3/10/20"]});
-
-    console.log(labels);
-    console.log(volume);
 
     var chart = new Chart('cases', {
         type: 'horizontalBar',
@@ -58,4 +53,17 @@ function makeChart(rawData)
         }
     });
 }
+
+function getMaxAmount(countryRecord)
+{
+    let nonDateFields = ["Province/State","Country/Region","Lat","Long"];
+    let values = [];
+    for (var key in countryRecord) {
+        if(nonDateFields.includes(key)) continue;
+        console.log(countryRecord[key]);
+        values.push(countryRecord[key]);
+    }
+    return Math.max(...values);
+}
+
 </script>

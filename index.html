@@ -37,30 +37,37 @@ function makeChart(rawData)
         if (countriesOfInterest.includes(x["Country/Region"])) return true;
         return getMaxAmount(x, datesLabels) >= minAmountOfCases;
     });
-    console.log(data);
+
     let [year, month, day] = yesterdaysDate();
     let dateUSA = usaDate(year, month, day);
     let dateISO = isoDate(year, month, day);
-    
     var labels = data.map(x => x["Country/Region"]);
     var volume = data.map(x => x[dateUSA]);
 
     var chartDatsets = data.map(function(x) {
         return {
             label: x["Country/Region"], 
-            data: valuesPerDates(x, datesLabels),
+            data: nonZeroValues(valuesPerDates(x, datesLabels)),
             fill: false,
             borderColor: randomColor()
         };
     });
 
+    var maxDays = Math.max(...chartDatsets.map(x => x.data.length));
+    var daysLabels = generateLabels(maxDays);
+
     var chart = new Chart('timelineCases', {
         type: 'line',
         data: {
-            labels: datesLabels,
+            labels: daysLabels,
             datasets: chartDatsets
         },
-        options: {}
+        options: {
+            title: {
+                display: true,
+                text: 'Since first infected',
+            }
+        }
     });
 
     new Chart('barChartCases', {
@@ -83,28 +90,6 @@ function makeChart(rawData)
             }
         }
     });
-
-    // new Chart('timelineCases', {
-    //     type: 'horizontalBar',
-    //     data: {
-    //         labels: labels,
-    //         datasets: [
-    //             {
-    //                 data: volume
-    //             }
-    //         ]
-    //     },
-    //     options: {
-    //         legend: {
-    //             display: false,
-    //         },
-    //         title: {
-    //             display: true,
-    //             text: 'Infected',
-    //         }
-    //     }
-    // });
-
 }
 function dateLabels(jsonObj){
     let nonDateProperties = ["Province/State","Country/Region","Lat","Long"];
@@ -116,6 +101,7 @@ function dateLabels(jsonObj){
     return dateProperties;  
 }
 
+let nonZeroValues = (values) => values.filter(x => x !== "0");
 let valuesPerDates = (countryRecord, datesLabels) => datesLabels.map(x => countryRecord[x]);
 
 let getMaxAmount = (countryRecord, datesLabels) => Math.max(...valuesPerDates(countryRecord, datesLabels));
@@ -132,4 +118,11 @@ function yesterdaysDate(){
 let usaDate = (year, month, day) => month + '/' + day + '/' + year;
 let isoDate = (year, month, day) => '20' + year + '/' + month + '/' + day;
 
+function generateLabels(amount){
+    labels = [];
+    for (let index = 1; index <= amount; index++) {
+        labels.push("Day " + index);
+    }
+    return labels;
+}
 </script>

@@ -41,17 +41,15 @@ function makeChart(rawData)
     let dateUSA = usaDate(year, month, day);
     let dateISO = isoDate(year, month, day);
     
-    var labels = data.map(function(d) {return d["Country/Region"]});
-    var volume = data.map(function(d) {return d[dateUSA]});
+    var labels = data.map(x => x["Country/Region"]);
+    var volume = data.map(x => x[dateUSA]);
 
     var chart = new Chart('timelineCases', {
         type: 'line',
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: datesLabels,
             datasets: [{
                 label: 'My First dataset',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
                 data: [0, 10, 5, 2, 20, 30, 45]
             }]
         },
@@ -111,8 +109,7 @@ function dateLabels(jsonObj){
     return dateProperties;  
 }
 function getMaxAmount(countryRecord, datesLabels){
-    let values = [];
-    datesLabels.forEach(x => values.push(countryRecord[x]));
+    let values = datesLabels.map(x => countryRecord[x]);
     return Math.max(...values);
 }
 function yesterdaysDate(){

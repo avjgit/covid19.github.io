@@ -13,20 +13,23 @@
 
 dataUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
 
-// todo: summarize Mainland China, US provinces
-
 d3.csv(dataUrl).then(makeChart);
 
 function makeChart(rawData)
 {
     console.log(rawData);
 
-    countries = ["Estonia", "Latvia", "Lithuania", "Italy", "Japan"]; // can hardcode
+    let countriesOfInterest = ["Estonia", "Latvia", "Lithuania"]; // can hardcode
+    let countriesFilteredOut = ["Mainland China", "US"]; // todo: handle (summarize?)
 
+    let countriesWithManyCases = rawData.map(function(d) {
+        return d["Country/Region"]
+    });
 
     let data = rawData.filter(function(x) {
-        // too big numbers there; todo: maybe summarize
-        return countries.includes(x["Country/Region"]);
+        return (countriesOfInterest.includes(x["Country/Region"])
+        || countriesWithManyCases.includes(x["Country/Region"]))
+        && !countriesFilteredOut.includes(x["Country/Region"]);
     });
 
     var labels = data.map(function(d) {return d["Country/Region"]});

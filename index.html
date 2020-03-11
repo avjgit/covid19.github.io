@@ -22,11 +22,25 @@
 <script>
 
 dataUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+populationUrl = "https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-population.json";
 
-d3.csv(dataUrl).then(makeChart);
+d3.csv(dataUrl)
+.then(downloadedCases => 
+    d3.json(populationUrl)
+    .then(downloadPopulation => 
+        makeChart(downloadedCases, downloadPopulation)));
 
-function makeChart(rawData)
+function makeChart(rawData, populationRaw)
 {
+    let populations = populationRaw.map(function(x) {
+        return {
+            country: x.country,
+            population: x.population / 10000
+        }
+    });
+
+    console.log(populations.filter(x => x.country == "Latvia")[0].population);
+
     let countriesOfInterest = ["Estonia", "Latvia", "Lithuania"]; // can hardcode
     let countriesFilteredOut = ["Mainland China", "US", "Others"]; // todo: handle (summarize?)
     let minAmountOfCases = 100;

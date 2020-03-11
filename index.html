@@ -6,6 +6,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.4/randomColor.min.js"></script>
+    <style>
+        img {
+            width: 50%;
+            height: auto;
+        }
+    </style>
     <meta name="google-site-verification" content="fx4I-sOTo-wiQwNT5vd1cRcSmYAfNrVdJSY3g1woL34" />
 </head>
 
@@ -41,21 +47,36 @@
     </p>
     <p>
         <div> "- But we have not so many cases in our country" </div>
-        Need to do all we can to keep so. It starts with small numbers,
+        We need to do all possible to keep so. It starts with small numbers,
         but with reproductive number 2 means it can grow high, quickly.
         How quick is doubling (exponential) growth?
         Imagine a chess board. Place a grain of wheat on first square,
         two grains on second, four - on third, and so on, doubling each time.
         So, roughly, to cover all chess board, how much bags of wheat wil you need?
-        <span onclick="toggleAnswer();" style="border-bottom: 2px dashed #000;">Show answer</span>
+        <span onclick="showAnswer();" style="border-bottom: 2px dashed #000;"> Show answer </span>
         <span id="answer" style="display: none;">
             <a href="https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem"> 1,199,000,000,000 metric tons. </a>
-            This is about 1645 times the global production of wheat (~780 million tonnes in 2019)
+            This is about 1645 times the global production of wheat (~780 million tonnes in 2019).
+            Not trying to <a href="https://xkcd.com/605/">extrapolate</a>, not everyone will get ill,
+            but unless precaution meathers taken, epidemy grows big; it is big - pandemy - already now
         </span>
     </p>
-
-
-
+    <p>
+        <div> "- Everyone who supposed to get ill, will; cannot contain virus already anyway" </div>
+        We need to do everything we can to stop spreading, or, at least, slow down.
+        Slowing down is realistic and very important.
+        Health systems cannot handle sudden peak of cases, but will better serve if those cases will be spread over
+        longer time.
+        Excellent resource is <a href="https://www.flattenthecurve.com/">flattenthecurve.com</a>, please read it.
+        <img src="https://i.imgur.com/86On2AZ.gif">
+    </p>
+    <p>
+        <div> "- Ok, so what can we do?" </div>
+        Follow instructions from local health authorities and 
+        <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public">
+            World Health Organization's issued recommendations 
+        </a>.
+    </p>
     <canvas id="timelineCasesPerCapita"></canvas>
     <canvas id="timelineCases"></canvas>
     <canvas id="barChartCases"></canvas>
@@ -273,8 +294,5 @@
         if (country === "Hong Kong") return "Hong Kong SAR";
         return country;
     }
-    function toggleAnswer() {
-        var x = document.getElementById("answer");
-        x.style.display = (x.style.display === "none" ? "block" : "none");
-    }
+    let showAnswer = () => document.getElementById("answer").style.display = "block";
 </script>

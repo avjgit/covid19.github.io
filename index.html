@@ -6,8 +6,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     </head>
     <body>
-        <canvas id="barChartCases"></canvas>
         <canvas id="timelineCases"></canvas>
+        <canvas id="barChartCases"></canvas>
     </body>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160266365-1"></script>
@@ -29,11 +29,12 @@ function makeChart(rawData)
     let countriesOfInterest = ["Estonia", "Latvia", "Lithuania"]; // can hardcode
     let countriesFilteredOut = ["Mainland China", "US", "Others"]; // todo: handle (summarize?)
     let minAmountOfCases = 100;
+    let datesLabels = dateLabels(rawData[0]);
 
     let data = rawData.filter(function(x) {
         if (countriesFilteredOut.includes(x["Country/Region"])) return false;
         if (countriesOfInterest.includes(x["Country/Region"])) return true;
-        return getMaxAmount(x) >= minAmountOfCases;
+        return getMaxAmount(x, datesLabels) >= minAmountOfCases;
     });
     console.log(data);
     let [year, month, day] = yesterdaysDate();
@@ -85,11 +86,12 @@ function makeChart(rawData)
     //     }
     // });
 
+
     var ctx = document.getElementById('timelineCases').getContext('2d');
     var chart = new Chart(ctx, {
         type: 'line',
         data: {
-            // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [{
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
@@ -109,10 +111,9 @@ function dateLabels(jsonObj){
     }
     return dateProperties;  
 }
-function getMaxAmount(countryRecord){
-    let dates = dateLabels(countryRecord);
+function getMaxAmount(countryRecord, datesLabels){
     let values = [];
-    dates.forEach(x => values.push(countryRecord[x]));
+    datesLabels.forEach(x => values.push(countryRecord[x]));
     return Math.max(...values);
 }
 function yesterdaysDate(){

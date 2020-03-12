@@ -140,10 +140,10 @@
         let [year, month, day] = yesterdaysDate();
         let dateUSA = usaDate(year, month, day);
         let dateISO = isoDate(year, month, day);
-        var labels = data.map(x => x["Country/Region"]);
-        var volume = data.map(x => x[dateUSA]);
+        let labels = data.map(x => x["Country/Region"]);
+        let volume = data.map(x => x[dateUSA]);
 
-        var chartDatsets = data.map(function (x) {
+        let chartDatsets = data.map(function (x) {
             return {
                 label: x["Country/Region"],
                 data: nonZeroValues(valuesPerDates(x, datesLabels)),
@@ -162,7 +162,7 @@
             };
         });
 
-        var chartPerCapitaDatasets = chartDatsets.map(function (x) {
+        let chartPerCapitaDatasets = chartDatsets.map(function (x) {
             let countryPopulation = populations.filter(p => p.country == x.label)[0].population;
             return {
                 label: x.label,
@@ -172,8 +172,8 @@
             };
         });
 
-        var maxDays = Math.max(...chartDatsets.map(x => x.data.length));
-        var daysLabels = generateLabels(maxDays);
+        let maxDays = Math.max(...chartDatsets.map(x => x.data.length));
+        let daysLabels = generateLabels(maxDays);
 
         new Chart('timelineCasesPerCapita', {
             type: 'line',

@@ -62,7 +62,7 @@
         So, roughly, to cover all chess board, how much bags of wheat wil you need?
         <span onclick="showAnswer();" style="border-bottom: 2px dashed #000;"> Show answer </span>
         <span id="answer" style="display: none;">
-            <a href="https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem"> 1,199,000,000,000 metric tons</a>. 
+            <a href="https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem"> 1,199,000,000,000 metric tons</a>.
             This is about 1645 times the global production of wheat (~780 million tonnes in 2019).
             Not trying to <a href="https://xkcd.com/605/">extrapolate</a>, not everyone will get ill,
             but unless precaution meathers taken, epidemy grows big; it is big - pandemy - already now
@@ -79,7 +79,8 @@
     </p>
     <p>
         <div class="question">- Ok, so what can we do?</div>
-        <div>Excellent resource is <a href="https://www.flattenthecurve.com/">flattenthecurve.com</a>, please read it.</div>
+        <div>Excellent resource is <a href="https://www.flattenthecurve.com/">flattenthecurve.com</a>, please read it.
+        </div>
         Follow instructions from local health authorities and <a href="http://who.int/covid-19"> recommendations </a>
         from World Health Organization's issued or just <a href="https://staythefuckhome.com/">staythefuckhome.com</a>.
     </p>
@@ -88,26 +89,16 @@
     <canvas id="timelineCases"></canvas>
     <canvas id="barChartCases"></canvas>
 
-    <div id="errorFeedback">There should be charts visible. If you don't see them, pleas <a href="https://github.com/avjgit/covid19.github.io/issues/new">open an issue</a>.</div>
-    <div id="errorFeedback">Source is <a href="https://github.com/avjgit/covid19.github.io">open</a>, feel free to clone and modify. Pull requests and issues are welcome.</div>
+    <div id="errorFeedback">There should be charts visible. If you don't see them, please <a
+            href="https://github.com/avjgit/covid19.github.io/issues/new">open an issue</a>.</div>
+    <div id="errorFeedback">Source is <a href="https://github.com/avjgit/covid19.github.io">open</a>, feel free to clone
+        and modify. Pull requests and issues are welcome.</div>
 
-    Datasources:
-    <a
-        href="https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv">infection
-        cases</a>,
-    <a
-        href="https://github.com/samayo/country-json/blob/master/src/country-by-population.json">population</a>.
+    Datasources: <a
+        href="https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv">
+        infection cases</a>,
+    <a href="https://github.com/samayo/country-json/blob/master/src/country-by-population.json">population</a>.
 </body>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-160266365-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'UA-160266365-1');
-</script>
-
-</html>
 <script>
 
     dataUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
@@ -261,3 +252,14 @@
     }
     let showAnswer = () => document.getElementById("answer").style.display = "block";
 </script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-160266365-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-160266365-1');
+</script>
+
+</html>

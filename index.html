@@ -84,6 +84,7 @@
         from World Health Organization's issued or just <a href="https://staythefuckhome.com/">staythefuckhome.com</a>.
     </p>
     <img src="https://i.imgur.com/86On2AZ.gif">
+    <canvas id="timelineCasesLatviaItaly"></canvas>
     <canvas id="timelineCasesPerCapita"></canvas>
     <canvas id="timelineCases"></canvas>
     <canvas id="barChartCases"></canvas>
@@ -151,6 +152,18 @@
             };
         });
 
+        let chartDatsetsLatviaItaly = chartDatsets.map(function (x) {
+            return {
+                label: x.label,
+                data: x.data,
+                fill: false,
+                borderColor: x.borderColor,
+                hidden: x.label !== "Italy" && x.label !== "Latvia"
+            };
+        });
+
+
+
         var chartPerCapitaDatasets = chartDatsets.map(function (x) {
             let countryPopulation = populations.filter(p => p.country == x.label)[0].population;
             return {
@@ -174,6 +187,20 @@
                 title: {
                     display: true,
                     text: 'Total count since first infected, per ' + populationDivisor + ' people',
+                }
+            }
+        });
+
+        new Chart('timelineCasesLatviaItaly', {
+            type: 'line',
+            data: {
+                labels: daysLabels,
+                datasets: chartDatsetsLatviaItaly
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Total count since first infected Latvia, Italy',
                 }
             }
         });

@@ -7,6 +7,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.4/randomColor.min.js"></script>
     <style>
+        .question {
+            font-weight: bold;
+        }
+
         img {
             width: 50%;
             height: auto;
@@ -21,7 +25,7 @@
 <body>
 
     <p>
-        <div>"- This is just a flu"</div>
+        <div class="question">- This is just a flu</div>
         This is more serious. Searchable quotes from <a
             href="https://www.who.int/docs/default-source/coronaviruse/situation-reports/20200306-sitrep-46-covid-19.pdf?sfvrsn=96b04adf_4">
             World Health Organization</a>:
@@ -31,16 +35,16 @@
             <li> "fractions of severe and critical infection would be higher than what is observed for influenza" </li>
             <li>"crude mortality ratio (the number of reported deaths divided by the reported cases) is between 3-4%.
                 For seasonal influenza, mortality is usually well below 0.1%." - so tens times more</li>
-        </ul>   
+        </ul>
         3-4% are average numbers across all groups, but for older people they are much higher - 8% for 70 years old,
         almost 15% for 80 and older)
     </p>
     <p>
-        <div> "- Most will get through with just mild simptoms" </div>
+        <div class="question">- Most will get through with just mild simptoms</div>
         Younger healthier adults - maybe, but our parents and colleagues with heart problems want to live too.
     </p>
     <p>
-        <div> "- For serious cases there will be doctors" </div>
+        <div class="question">- For serious cases there will be doctors</div>
         Unless there are too many cases and not enough Intensive Care Units for infected.
         <a
             href="https://www.who.int/docs/default-source/coronaviruse/situation-reports/20200306-sitrep-46-covid-19.pdf?sfvrsn=96b04adf_4">
@@ -49,7 +53,7 @@
         High numbers of infected makes those 20% of serious case too high for hospitals to handle.
     </p>
     <p>
-        <div> "- But we have not so many cases in our country" </div>
+        <div class="question">- But we have not so many cases in our country</div>
         We need to do all possible to keep so. It starts with small numbers,
         but with reproductive number 2 means it can grow high, quickly.
         How quick is doubling (exponential) growth?
@@ -65,20 +69,19 @@
         </span>
     </p>
     <p>
-        <div> "- Everyone who supposed to get ill, will; cannot contain virus already anyway" </div>
+        <div class="question">- Everyone who supposed to get ill, will; cannot contain virus already anyway</div>
         We need to do everything we can to stop spreading, or, at least, slow down.
         Slowing down is realistic and very important.
         Health systems cannot handle sudden peak of cases, but will better serve if those cases will be spread over
-        longer time. There are <a href="https://www.reddit.com/r/Coronavirus/comments/fh06s2/what_flattening_the_curve_actually_looks_like/">
-        historical evidence</a> from Spanish Flu, it helps not just spread in time, but minimize total counts.
+        longer time. There are <a
+            href="https://www.reddit.com/r/Coronavirus/comments/fh06s2/what_flattening_the_curve_actually_looks_like/">
+            historical evidence</a> from Spanish Flu, it helps not just spread in time, but minimize total counts.
     </p>
     <p>
-        <div> "- Ok, so what can we do?" </div>
-        Excellent resource is <a href="https://www.flattenthecurve.com/">flattenthecurve.com</a>, please read it.
-        Follow instructions from local health authorities and 
-        <a href="http://who.int/covid-19">
-            World Health Organization's issued recommendations 
-        </a> or just <a href="https://staythefuckhome.com/">staythefuckhome.com</a>.
+        <div class="question">- Ok, so what can we do?</div>
+        <div>Excellent resource is <a href="https://www.flattenthecurve.com/">flattenthecurve.com</a>, please read it.</div>
+        Follow instructions from local health authorities and <a href="http://who.int/covid-19"> recommendations </a>
+        from World Health Organization's issued or just <a href="https://staythefuckhome.com/">staythefuckhome.com</a>.
     </p>
     <img src="https://i.imgur.com/86On2AZ.gif">
     <canvas id="timelineCasesPerCapita"></canvas>

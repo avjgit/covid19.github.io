@@ -23,7 +23,6 @@
 </head>
 
 <body>
-
     <p>
         <div class="question">- This is just a flu</div>
         This is more serious. Searchable quotes from <a
@@ -113,7 +112,7 @@
     function makeChart(rawData, populationRaw) {
 
         let countriesOfInterest = ["Estonia", "Latvia", "Lithuania"]; // can hardcode
-        let countriesFilteredOut = ["Mainland China", "US", "Others"]; // todo: handle (summarize?)
+        let countriesFilteredOut = ["Mainland China", "US", "Others", "Cruise Ship"]; // todo: handle (summarize?)
         let minAmountOfCases = 100;
         let populationDivisor = 1000000;
 
@@ -148,7 +147,9 @@
         });
 
         var chartPerCapitaDatasets = chartDatsets.map(function (x) {
+            console.log(x.label);
             let countryPopulation = populations.filter(p => p.country == x.label)[0].population;
+            console.log("found");
             return {
                 label: x.label,
                 data: x.data.map(z => parseInt(z) / countryPopulation),
@@ -244,9 +245,7 @@
         return labels;
     }
     function mapCountry(country) {
-        if (country === "United Kingdom") return "UK";
-        if (country === "Iran") return "Iran (Islamic Republic of)";
-        if (country === "South Korea") return "Republic of Korea";
+        if (country === "South Korea") return "Korea, South";
         if (country === "Hong Kong") return "Hong Kong SAR";
         return country;
     }

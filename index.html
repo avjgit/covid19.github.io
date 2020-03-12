@@ -147,9 +147,7 @@
         });
 
         var chartPerCapitaDatasets = chartDatsets.map(function (x) {
-            console.log(x.label);
             let countryPopulation = populations.filter(p => p.country == x.label)[0].population;
-            console.log("found");
             return {
                 label: x.label,
                 data: x.data.map(z => parseInt(z) / countryPopulation),

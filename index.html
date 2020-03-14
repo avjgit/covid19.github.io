@@ -196,32 +196,32 @@
         // chartDatsetsLatviaItaly.
 
 
-        let chartPerCapitaDatasets = chartDatsets.map(function (x) {
-            let countryPopulation = populations.filter(p => p.country == x.label)[0].population;
-            return {
-                label: x.label,
-                data: x.data.map(z => parseInt(z) / countryPopulation),
-                fill: x.fill,
-                borderColor: x.borderColor
-            };
-        });
+        // let chartPerCapitaDatasets = chartDatsets.map(function (x) {
+        //     let countryPopulation = populations.filter(p => p.country == x.label)[0].population;
+        //     return {
+        //         label: x.label,
+        //         data: x.data.map(z => parseInt(z) / countryPopulation),
+        //         fill: x.fill,
+        //         borderColor: x.borderColor
+        //     };
+        // });
 
         let maxDays = Math.max(...chartDatsets.map(x => x.data.length));
         let daysLabels = generateLabels(maxDays);
 
-        new Chart('timelineCasesPerCapita', {
-            type: 'line',
-            data: {
-                labels: daysLabels,
-                datasets: chartPerCapitaDatasets
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Total count since first infected, per ' + populationDivisor + ' people',
-                }
-            }
-        });
+        // new Chart('timelineCasesPerCapita', {
+        //     type: 'line',
+        //     data: {
+        //         labels: daysLabels,
+        //         datasets: chartPerCapitaDatasets
+        //     },
+        //     options: {
+        //         title: {
+        //             display: true,
+        //             text: 'Total count since first infected, per ' + populationDivisor + ' people',
+        //         }
+        //     }
+        // });
 
         new Chart('timelineCasesLatviaItaly', {
             type: 'line',

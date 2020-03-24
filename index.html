@@ -192,7 +192,9 @@
                 borderColor: x.borderColor,
                 hidden: !countriesOfInterest.includes(x.label)
             };
-        });
+        })
+        .sort((a, b) => a.label.localeCompare(b.label));
+
 
         // update with latest data
         // chartDatsetsLatviaItaly.

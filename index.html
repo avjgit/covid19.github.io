@@ -27,23 +27,28 @@
 </head>
 
 <body>
-    Exact numbers in 
-    <a
-        href="https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv">
-        datasource for infection cases</a> might be updated with delay (day or two), follow your local media for latest information.<br/>
-        Bear in mind, that different countries have different approach to testing and statistics.<br/>
-
+    <div id="disclaimer">
+        Exact numbers in
+        <a
+            href="https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv">
+            datasource for infection cases</a> might be updated with delay (day or two), follow your local media for
+        latest
+        information.<br />
+        Bear in mind, that different countries have different approach to testing and statistics.<br />
+    </div>
 
     <canvas id="timelineCasesLatviaItaly"></canvas>
 
-    <h2>
-        <span onclick="toogleHide('otherCharts');" class="toogleHandle">Show other charts</span>
-    </h2>
+    <div id="otherCanvas">
+        <h2>
+            <span onclick="toogleHide('otherCharts');" class="toogleHandle">Show other charts</span>
+        </h2>
 
-    <div id="otherCharts" style="display: none;">
-        <canvas id="timelineCasesPerCapita"></canvas>
-        <canvas id="timelineCases"></canvas>
-        <canvas id="barChartCases"></canvas>
+        <div id="otherCharts" style="display: none;">
+            <canvas id="timelineCasesPerCapita"></canvas>
+            <canvas id="timelineCases"></canvas>
+            <canvas id="barChartCases"></canvas>
+        </div>
     </div>
 
     <h2>
@@ -122,19 +127,25 @@
 
     </div>
 
-    There are more dashboards with maps, total number of cases and other metrics:
-    by <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6">Johns
-        Hopkins university</a>,
-    with <a href="https://coronavirus.arik.io/">advanced filters</a> and
-    <a href="https://covid19info.live/en/">more</a>.
+    <div id="footer">
 
-    <div id="errorFeedback">There should be charts visible. If you don't see them, please <a
-            href="https://github.com/avjgit/covid19.github.io/issues/new">open an issue</a>.</div>
-    <div id="errorFeedback">Source is <a href="https://github.com/avjgit/covid19.github.io">open</a>, feel free to clone
-        and modify. Pull requests and issues are welcome.</div>
+        There are more dashboards with maps, total number of cases and other metrics:
+        by <a
+            href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6">Johns
+            Hopkins university</a>,
+        with <a href="https://coronavirus.arik.io/">advanced filters</a> and
+        <a href="https://covid19info.live/en/">more</a>.
 
-    <a href="https://github.com/samayo/country-json/blob/master/src/country-by-population.json">Datasource for
-        population</a>.
+        <div id="errorFeedback">There should be charts visible. If you don't see them, please <a
+                href="https://github.com/avjgit/covid19.github.io/issues/new">open an issue</a>.</div>
+        <div id="errorFeedback">Source is <a href="https://github.com/avjgit/covid19.github.io">open</a>, feel free to
+            clone
+            and modify. Pull requests and issues are welcome.</div>
+
+        <a href="https://github.com/samayo/country-json/blob/master/src/country-by-population.json">Datasource for
+            population</a>.
+    </div>
+
 </body>
 <script>
 
@@ -193,12 +204,10 @@
                 hidden: !countriesOfInterest.includes(x.label)
             };
         })
-        .sort((a, b) => a.label.localeCompare(b.label));
-
+            .sort((a, b) => a.label.localeCompare(b.label));
 
         // update with latest data
         // chartDatsetsLatviaItaly.
-
 
         // let chartPerCapitaDatasets = chartDatsets.map(function (x) {
         //     let countryPopulation = populations.filter(p => p.country == x.label)[0].population;
@@ -291,6 +300,7 @@
             }
         });
     }
+
     function dateLabels(jsonObj) {
         let nonDateProperties = ["Province/State", "Country/Region", "Lat", "Long"];
         let dateProperties = [];
@@ -303,8 +313,9 @@
 
     let nonZeroValues = (values) => values.filter(x => x !== "0");
     let valuesPerDates = (countryRecord, datesLabels) => datesLabels.map(x => countryRecord[x]);
-
     let getMaxAmount = (countryRecord, datesLabels) => Math.max(...valuesPerDates(countryRecord, datesLabels));
+    let usaDate = (year, month, day) => month + '/' + day + '/' + year;
+    let isoDate = (year, month, day) => '20' + year + '/' + month + '/' + day;
 
     function yesterdaysDate() {
         var date = new Date();
@@ -315,38 +326,37 @@
         return [year, month, day]
     }
 
-    let usaDate = (year, month, day) => month + '/' + day + '/' + year;
-    let isoDate = (year, month, day) => '20' + year + '/' + month + '/' + day;
-
-    function generateLabels(amount) {
+    function generateLabels(count) {
         labels = [];
-        for (let index = 1; index <= amount; index++) {
-            labels.push("Day " + index);
-        }
+        for (let i = 1; i <= count; i++) labels.push("Day " + i);
         return labels;
     }
+
     function mapCountry(country) {
         if (country === "South Korea") return "Korea, South";
         if (country === "Hong Kong") return "Hong Kong SAR";
         return country;
     }
+
     function toogleHide(elementId) {
         var el = document.getElementById(elementId);
         el.style.display = el.style.display === "block" ? "none" : "block";
     }
 </script>
 
-<script type = "text/javascript" async>
-(function(d, h) {
-    s = d.createElement('script');
-    s.type = 'text/javascript';
-    s.src = h;
-    s.setAttribute('data-config', "https://widget.alphablues.com/config/GvAOtVG0Wg");
-    x = d.getElementsByTagName('script')[0];
-    x.parentNode.insertBefore(s, x);
-})(document, "https://widget.alphablues.com/widget/latest/bundle.prod.js");
+<!-- this is chatbot; not critically necessary-->
+<script type="text/javascript" async>
+    (function (d, h) {
+        s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.src = h;
+        s.setAttribute('data-config', "https://widget.alphablues.com/config/GvAOtVG0Wg");
+        x = d.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+    })(document, "https://widget.alphablues.com/widget/latest/bundle.prod.js");
 </script>
 
+<!-- this is Google analytics; not critically necessary-->
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160266365-1"></script>
 <script>
